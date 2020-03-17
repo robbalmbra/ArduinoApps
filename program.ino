@@ -47,7 +47,7 @@ void setup()
 
     // 1 = Open Network, 0 = Normal Network with password
     // Format: SSID,username,password,network type
-    char *wifiDetails[][4] = { {"","","","0"},{"","","",""} };
+    char *wifiDetails[][4] = { {"","","","0"},{"","","","0"} };
     int rssitemp = -10000;
     int index = -1;
     char mac[18];
