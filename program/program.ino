@@ -1,6 +1,29 @@
 #include "ESP8266WiFi.h"
+#include <lwip/napt.h>
+#include <lwip/dns.h>
+#include <dhcpserver.h>
 
-#define DEBUG 0
+#define DEBUG 1
+
+void createAP(const char *ssid, const char *pass){
+
+  delay(5000);
+  WiFi.softAP(ssid, pass);
+
+  #if DEBUG
+  Serial.printf("\nSuccessfully routing to AP '%s'",ssid);
+  #endif
+
+  // Initialize the NAT feature
+  ip_napt_init(512, 32);
+
+  // Enable NAT on the AP interface
+  ip_napt_enable_no(1, 1);
+
+  // Set the DNS server for clients of the AP to the one we also use for the STA interface
+  dhcps_set_dns(0,WiFi.dnsIP(0));
+  dhcps_set_dns(1,WiFi.dnsIP(1));
+}
 
 int connect(){
   int count = 0;
@@ -42,16 +65,22 @@ void setup()
   // flush prevmac
   strcpy(prevmac,"");
 
+  // Define wireless networks
+  // 1 = Open Network, 0 = Normal Network with password
+  // Format: SSID,username,password,network type
+  char *wifiDetails[][4] = { {"VM5328000_2G","","b7dmJcppykgd","0"},{"","","","0"} };
+
+  // AP Settings ssid & password
+  const static char *APssid = "Robs Wifi";
+  const static char *APpass = "Landy964i22@$";
+
+
   while(1){
     int networksFound = WiFi.scanNetworks();
-
-    // 1 = Open Network, 0 = Normal Network with password
-    // Format: SSID,username,password,network type
-    char *wifiDetails[][4] = { {"","","","0"},{"","","","0"} };
     int rssitemp = -10000;
     int index = -1;
     char mac[18];
-  
+
     for (int i = 0; i < networksFound; i++)
     {
       for(int j = 0; j < sizeof(wifiDetails) / sizeof(wifiDetails[0]); j++)
@@ -100,6 +129,7 @@ void setup()
       // Set prevmac
       if(status == 0){
         strcpy(prevmac,mac);
+        createAP(APssid,APpass);
       }else{
         strcpy(prevmac,"");
       }
@@ -118,6 +148,7 @@ void setup()
       // Set prevmac
       if(status == 0){
         strcpy(prevmac,mac);
+        createAP(APssid,APpass);
       }else{
         strcpy(prevmac,"");
       }
@@ -128,4 +159,7 @@ void setup()
   }
 }
 
-void loop() {}
+void loop() 
+{
+  delay(1000);
+}
