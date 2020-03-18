@@ -65,7 +65,7 @@ void setup()
   // flush prevmac
   strcpy(prevmac,"");
 
-  // Define wireless networks
+  // Define wireless networks to find and connect to
   // 1 = Open Network, 0 = Normal Network with password
   // Format: SSID,username,password,network type
   char *wifiDetails[][4] = { {"","","","0"},{"","","","0"} };
@@ -73,7 +73,6 @@ void setup()
   // AP Settings ssid & password
   const static char *APssid = "Local SSID";
   const static char *APpass = "securepasswd";
-
 
   while(1){
     int networksFound = WiFi.scanNetworks();
