@@ -68,11 +68,11 @@ void setup()
   // Define wireless networks
   // 1 = Open Network, 0 = Normal Network with password
   // Format: SSID,username,password,network type
-  char *wifiDetails[][4] = { {"VM5328000_2G","","b7dmJcppykgd","0"},{"","","","0"} };
+  char *wifiDetails[][4] = { {"","","","0"},{"","","","0"} };
 
   // AP Settings ssid & password
-  const static char *APssid = "Robs Wifi";
-  const static char *APpass = "Landy964i22@$";
+  const static char *APssid = "Local SSID";
+  const static char *APpass = "securepasswd";
 
 
   while(1){
