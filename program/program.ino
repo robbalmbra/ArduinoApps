@@ -3,7 +3,7 @@
 #include <lwip/dns.h>
 #include <dhcpserver.h>
 
-#define DEBUG 1
+#define DEBUG 0
 
 void createAP(const char *ssid, const char *pass){
 
