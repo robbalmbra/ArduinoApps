@@ -1,2 +1,2 @@
 # ArdounioWifiAutoConnect
-Connects to private wireless networks including bt openzone and virgin media.
+Connects to private wireless networks including bt openzone and virgin media automatically.
